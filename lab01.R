@@ -58,10 +58,51 @@ scatter3
 # achieve better highway fuel efficiency than other types of vehicles with the
 # same size engine
 
+### Exercise 2 ###
 
+# Save the bank data as a data frame
+bankData <- read.csv("bank.csv")
+head(bankData)
 
+scatter4 <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=marital,
+    color=education,
+    fill=default
+  )
+) + 
+  geom_bar(
+    position=position_dodge()
+  ) + 
+  scale_color_manual(
+    values=c("red", "orange", "yellow", "green")
+  ) + 
+  scale_fill_manual(
+    values=c("white", "black")
+  ) +
+  xlab("Marital Status") +
+  ylab("Number")
 
+scatter4
 
+numDivorced <- length(which(bankData$marital == "divorced"))
+numMarried <- length(which(bankData$marital == "married"))
+numSingle <- length(which(bankData$marital == "single"))
+
+numDivorcedDefault <- length(which((bankData$marital == "divorced") && (bankData$default == "yes")))
+numMarriedDefault <- length(which((bankData$marital == "married") && (bankData$default == "yes")))
+numSingleDefault <- length(which((bankData$marital == "single") && (bankData$default == "yes")))
+
+total <- c(numDivorced, numMarried, numSingle)
+default <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault)
+percentage <- c(numDivorcedDefault/numDivorced, numMarriedDefault/numMarried, numSingleDefault/numSingle)
+
+total
+default
+percentage
+
+which
 
 
 
