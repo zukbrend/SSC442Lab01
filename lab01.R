@@ -64,45 +64,72 @@ scatter3
 bankData <- read.csv("bank.csv")
 head(bankData)
 
-scatter4 <- ggplot(
+View1 <- ggplot(
   data=bankData,
   mapping=aes(
-    x=marital,
-    color=education,
+    x=job,
+    # color=education,
     fill=default
   )
 ) + 
   geom_bar(
     position=position_dodge()
   ) + 
-  scale_color_manual(
-    values=c("red", "orange", "yellow", "green")
+  scale_fill_manual(
+    values=c("black", "red")
+  ) +
+  # scale_color_manual(
+    # values=c("red", "yellow", "green", "blue")
+  # ) + 
+  xlab("Occupation") +
+  ylab("Number") + 
+  ggtitle("Number of Defaulted Accounts Based on Occupation") +
+  theme(axis.text.x=element_text(angle=90, hjust=1))
+
+View1
+
+View2 <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=education,
+    fill=default
+  )
+) + 
+  geom_bar(
+    position=position_dodge()
   ) + 
   scale_fill_manual(
-    values=c("white", "black")
+    values=c("black", "red")
   ) +
-  xlab("Marital Status") +
-  ylab("Number")
+  xlab("Education Level") +
+  ylab("Number") + 
+  ggtitle("Number of Defaulted Accounts Based on Education Level") +
+  theme(axis.text.x=element_text(angle=90, hjust=1))
 
-scatter4
+View2
 
-numDivorced <- length(which(bankData$marital == "divorced"))
-numMarried <- length(which(bankData$marital == "married"))
-numSingle <- length(which(bankData$marital == "single"))
+View3 <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=housing,
+    color=loan,
+    fill=education
+  )
+) + 
+  geom_bar(
+    position=position_dodge()
+  ) + 
+  # scale_fill_manual(
+    # values=c("black", "red")
+  # ) +
+  scale_color_manual(
+    values=c("black", "white")
+  ) + 
+  xlab("Has a Mortgage") +
+  ylab("Number") + 
+  ggtitle("Occupations as They Relate to Mortgages and Loans")
 
-numDivorcedDefault <- length(which((bankData$marital == "divorced") && (bankData$default == "yes")))
-numMarriedDefault <- length(which((bankData$marital == "married") && (bankData$default == "yes")))
-numSingleDefault <- length(which((bankData$marital == "single") && (bankData$default == "yes")))
-
-total <- c(numDivorced, numMarried, numSingle)
-default <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault)
-percentage <- c(numDivorcedDefault/numDivorced, numMarriedDefault/numMarried, numSingleDefault/numSingle)
-
-total
-default
-percentage
-
-which
+View3
 
 
 
