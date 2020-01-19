@@ -5,7 +5,7 @@ library(tidyverse)
 # Save data in a data frame
 mpgData <- ggplot2::mpg
 
-DisplVHwy <- ggplot(
+DispVHwy <- ggplot(
   data=mpgData,
   mapping=aes(
     x=displ,
@@ -17,7 +17,7 @@ DisplVHwy <- ggplot(
   ylab("Highway Fuel Efficiency (mpg)") + 
   ggtitle("Engine Size Vs. Highway Fuel Efficiency")
 
-DisplVHwy
+DispVHwy
 
 # Yes, this scatter plot of Engine Size vs. Highway Fuel Efficiency shows the intuitive 
 # relationship that as engine size (disp) increases, highway fuel efficiency will decrease
@@ -62,7 +62,7 @@ DisplVHwyColor
 # of vehicle, it appears that 2-seat vehicles are outlyers in the sense that they
 # achieve better highway fuel efficiency than other types of vehicles with the
 # same size engine
-################################################################################
+###########################END OF EXERCISE 1b###################################
 
 ########################### BEGIN EXERCISE 2 ###################################
 

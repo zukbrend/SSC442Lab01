@@ -1,0 +1,108 @@
+---
+title: "SSC 442 Lab 01"
+author: "Team 7"
+date: "1/16/2020"
+output: pdf_document
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r include=FALSE}
+mpgData <- ggplot2::mpg
+bankData <- read.csv("bank.csv")
+```
+# **Exercise 1:**
+
+```{r dispVHwy}
+DispVHwy <- ggplot(
+  data=mpgData,
+  mapping=aes(
+    x=displ,
+    y=hwy
+  )
+) + 
+  geom_point() +
+  xlab("Engine Size (Liters)") + 
+  ylab("Highway Fuel Efficiency (mpg)") + 
+  ggtitle("Engine Size Vs. Highway Fuel Efficiency") +
+  theme(plot.title=element_text(hjust=0.5))
+
+DispVHwy
+```
+
+This scatter plot of Engine Size vs. Highway Fuel Efficiency shows a negative correlation between engine size and highway fuel efficiency. That is, the scatter plot demonstrates a general trend that as engine size (disp) increases, highway fuel efficiency will decrease. This relationship is, however, intuitive. One would expect that as the size of the engine increases, the engine will use more gasoline, and thus will have a lower highway fuel efficiency.
+
+```{r classVDrv}
+ClassVDrv <- ggplot(
+  data=mpgData,
+  mapping=aes(
+    x=class,
+    y=drv
+  )
+) + 
+  geom_point() + 
+  xlab("Vehicle Class") + 
+  ylab("Vehicle Drive Type") +
+  ggtitle("Vehicle Class vs. Drive Type") +
+  theme(plot.title=element_text(hjust=0.5))
+
+ClassVDrv
+```
+
+This scatter plot of Vehicle Class Vs. Drive Type is not a useful plot because there is no related relationship between
+the two variables. The vehicle class generally dictates what drive type the vehicle may have, and there are far too few data points to make any reasonable conclusions
+
+## **Exercise 1b:**
+
+```{r classVDrvColor}
+DisplVHwyColor <- ggplot(
+  data=mpgData,
+  mapping=aes(
+    x=displ,
+    y=hwy,
+    color=class
+  )
+) + 
+  geom_point() +
+  xlab("Engine Size (Liters)") + 
+  ylab("Highway Fuel Efficiency (mpg)") + 
+  ggtitle("Engine Size Vs. Highway Fuel Efficiency, Colored by Vehicle Class")
+
+DisplVHwyColor
+```
+
+Given the scatter plot Engine Size Vs. Highway Fuel Efficiency generated with color coded dots according to the type
+of vehicle, it can be noted that 2-seat vehicles are outlyers in the sense that they achieve better highway fuel efficiency than other types of vehicles with the same size engine. This is likely explained by the fact that 2-seat vehicles are smaller and lighter than the other vehicles which have similar sized engines.
+
+# **Exercise 2:**
+
+```{r MaritalDefaultTable, results='asis'}
+numDivorced <- length(which(bankData$marital == "divorced"))
+numMarried <- length(which(bankData$marital == "married"))
+numSingle <- length(which(bankData$marital == "single"))
+
+numDivorcedDefault <- length(bankData[bankData$marital=="divorced" & bankData$default=="yes", ]$default)
+numMarriedDefault <- length(bankData[bankData$marital=="married" & bankData$default=="yes", ]$default)
+numSingleDefault <- length(bankData[bankData$marital=="single" & bankData$default=="yes", ]$default)
+
+totalNumCustomers <- c(numDivorced, numMarried, numSingle)
+totalNumCustomersDefaulted <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault)
+percentageDefaulted <- c(
+  ((numDivorcedDefault  /numDivorced) * 100), 
+  ((numMarriedDefault / numMarried) * 100), 
+  ((numSingleDefault / numSingle) * 100)
+)
+
+MaritalStatusDefaultAnalysis <- as.data.frame(totalNumCustomers, c("Divorced", "Married", "Single"))
+MaritalStatusDefaultAnalysis$totalNumCustomersDefaulted <- totalNumCustomersDefaulted
+MaritalStatusDefaultAnalysis$percentageDefaulted <- percentageDefaulted
+
+kable(MaritalStatusDefaultAnalysis[,])
+```
