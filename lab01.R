@@ -146,6 +146,26 @@ MortgageLoanAnalysis <- t(MortgageLoanAnalysis)
 
 MortgageLoanAnalysis
 
+MortgagesAndLoans <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=housing,
+    fill=loan
+  )
+) + 
+  geom_bar(
+    position=position_dodge()
+  ) + 
+  scale_fill_manual(
+    values=c("red", "blue")
+  ) + 
+  xlab("Has a Mortgage") +
+  ylab("Number") + 
+  ggtitle("Mortgages and Loans") +
+  theme(plot.title=element_text(hjust=0.5))
+
+MortgagesAndLoans
+
 # MortgageLoanAnalysis shows the number and percentage of customers with and without mortgages and 
 # loans, now we just need a visualization of this, which is meaningful because the second largest
 # proportion of this bank's customer base has neither a loan or a mortgage, 
