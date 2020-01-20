@@ -59,7 +59,7 @@ ClassVDrv
 This scatter plot of Vehicle Class Vs. Drive Type is not a useful plot because there is no related relationship between
 the two variables. The vehicle class generally dictates what drive type the vehicle may have, and there are far too few data points to make any reasonable conclusions
 
-## **Exercise 1b:**
+# **Exercise 1b:**
 
 ```{r classVDrvColor}
 DisplVHwyColor <- ggplot(
@@ -83,26 +83,100 @@ of vehicle, it can be noted that 2-seat vehicles are outlyers in the sense that 
 
 # **Exercise 2:**
 
-```{r MaritalDefaultTable, results='asis'}
+```{r, results='asis'}
+MaritalDefaultPlot <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=marital,
+    fill=default,
+  )
+) +
+  geom_bar(position="dodge") +
+  xlab("Marital Status") + 
+  ylab("Number of Customers") + 
+  scale_fill_manual(
+    values=c("black", "red")
+  ) + 
+  ggtitle("Marital Status and Default Rates with Education Levels") +
+  theme(plot.title=element_text(hjust=0.5))
+
+MaritalDefaultPlot
+
 numDivorced <- length(which(bankData$marital == "divorced"))
 numMarried <- length(which(bankData$marital == "married"))
 numSingle <- length(which(bankData$marital == "single"))
+numTotal <- numDivorced + numMarried + numSingle
 
 numDivorcedDefault <- length(bankData[bankData$marital=="divorced" & bankData$default=="yes", ]$default)
 numMarriedDefault <- length(bankData[bankData$marital=="married" & bankData$default=="yes", ]$default)
 numSingleDefault <- length(bankData[bankData$marital=="single" & bankData$default=="yes", ]$default)
+numTotalDefault <- numDivorcedDefault + numMarriedDefault + numSingleDefault
 
-totalNumCustomers <- c(numDivorced, numMarried, numSingle)
-totalNumCustomersDefaulted <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault)
+totalNumCustomers <- c(numDivorced, numMarried, numSingle, numTotal)
+totalNumCustomersDefaulted <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault, numTotalDefault)
 percentageDefaulted <- c(
   ((numDivorcedDefault  /numDivorced) * 100), 
   ((numMarriedDefault / numMarried) * 100), 
-  ((numSingleDefault / numSingle) * 100)
+  ((numSingleDefault / numSingle) * 100),
+  ((numTotalDefault / numTotal) * 100)
 )
 
-MaritalStatusDefaultAnalysis <- as.data.frame(totalNumCustomers, c("Divorced", "Married", "Single"))
+MaritalStatusDefaultAnalysis <- as.data.frame(totalNumCustomers, c("Divorced", "Married", "Single", "Total"))
 MaritalStatusDefaultAnalysis$totalNumCustomersDefaulted <- totalNumCustomersDefaulted
 MaritalStatusDefaultAnalysis$percentageDefaulted <- percentageDefaulted
 
 kable(MaritalStatusDefaultAnalysis[,])
 ```
+
+The above graph and table dmeonstrate how customer marital status is related to the rate at which they default on the loan or mortgage the customer holds with the bank. From the graph and table, we note that in general, a very small proportion (approximatley 1.7%) of all customers, across all marital stauses, default on the loans/mortgages they hold. However, the table demonstrates that customers who have been divorced are the most at-risk population for defaulting on their loan/mortgage, and married individuals are the population with the lowest risk of defaulting.
+
+```{r, results='asis'}
+MortgagesAndLoans <- ggplot(
+  data=bankData,
+  mapping=aes(
+    x=housing,
+    fill=loan
+  )
+) + 
+  geom_bar(
+    position=position_dodge()
+  ) + 
+  scale_fill_manual(
+    values=c("red", "blue")
+  ) + 
+  xlab("Has a Mortgage") +
+  ylab("Number") + 
+  ggtitle("Mortgages and Loans") +
+  theme(plot.title=element_text(hjust=0.5))
+
+MortgagesAndLoans
+
+numNeither <- length(bankData[bankData$housing!="yes" & bankData$loan!="yes", ]$housing)
+numJustMortgage <- length(bankData[bankData$housing=="yes" & bankData$loan!="yes", ]$housing)
+numJustLoan <- length(bankData[bankData$housing!="yes" & bankData$loan=="yes", ]$housing)
+numBoth <- length(bankData[bankData$housing=="yes" & bankData$loan=="yes", ]$housing)
+totalWithMortgageOrLoan <- numJustMortgage + numJustLoan + numBoth
+total <- totalWithMortgageOrLoan + numNeither
+
+MortgageLoanAnalysis <- as.data.frame(numNeither, "Number")
+MortgageLoanAnalysis$a <- numJustMortgage
+MortgageLoanAnalysis$b <- numJustLoan
+MortgageLoanAnalysis$c <- numBoth
+
+names(MortgageLoanAnalysis) <- c("Neither a Mortgage nor a Loan", "Only a Mortgage", "Only a Loan", "Both a Mortgage and a Loan")
+MortgageLoanAnalysis <- rbind(
+  MortgageLoanAnalysis,
+  c(
+    ((numNeither / total) * 100),
+    ((numJustMortgage / total) * 100), 
+    ((numJustLoan / total) * 100),
+    ((numBoth / total) * 100)
+  )
+)
+row.names(MortgageLoanAnalysis) <- c("Number of Customers", "Percentage")
+MortgageLoanAnalysis <- t(MortgageLoanAnalysis)
+
+kable(MortgageLoanAnalysis[,])
+```
+
+The above graph and table display data on customers who have neither a loan nor a loan, only a mortgage, only a loan, or both. From the graph, it can be seen that the largest population has only a mortgage, but the smallest population has both a loan and a mortgage. The table breaks these populations down into percentages, and it can be seen that roughly half of all customers hold mortgages, but the next largest population is customers who have neither a mortgage nor a loan. Thus, from a business perspective, one of the best approaches to increasing revenues for the bank would be to entice the large population of customers (approximately 37%) who do not have a mortgage or a loan to take out a mortgage or loan from the bank. Another tactic which could possibly increase business revenues would be to target the population of customers who have exclusively a loan or a mortgage, and attempt to entice them to take out another or one of the other types.
