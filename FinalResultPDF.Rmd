@@ -37,7 +37,7 @@ DispVHwy <- ggplot(
 DispVHwy
 ```
 
-This scatter plot of Engine Size vs. Highway Fuel Efficiency shows a negative correlation between engine size and highway fuel efficiency. That is, the scatter plot demonstrates a general trend that as engine size (disp) increases, highway fuel efficiency will decrease. This relationship is, however, intuitive. One would expect that as the size of the engine increases, the engine will use more gasoline, and thus will have a lower highway fuel efficiency.
+This scatter plot of Engine Size vs. Highway Fuel Efficiency suggests a negative correlation between engine size and highway fuel efficiency. In other words, the data demonstrates a general trend that as engine size (disp) increases, highway fuel efficiency will decrease. Of course, this relationship is expected, as one can hypothesize that as the size of the engine increases, the engine will use more gasoline, thus leading to a lower highway fuel efficiency.
 
 ```{r classVDrv}
 ClassVDrv <- ggplot(
@@ -56,8 +56,7 @@ ClassVDrv <- ggplot(
 ClassVDrv
 ```
 
-This scatter plot of Vehicle Class Vs. Drive Type is not a useful plot because there is no related relationship between
-the two variables. The vehicle class generally dictates what drive type the vehicle may have, and there are far too few data points to make any reasonable conclusions
+This scatter plot of Vehicle Class vs. Drive Type is not useful, due to the fact that there is no observable relationship between the two variables. The vehicle class generally dictates what drive type the vehicle may have, and there are far too few data points to make any reasonable conclusions.
 
 # **Exercise 1b:**
 
@@ -78,8 +77,7 @@ DisplVHwyColor <- ggplot(
 DisplVHwyColor
 ```
 
-Given the scatter plot Engine Size Vs. Highway Fuel Efficiency generated with color coded dots according to the type
-of vehicle, it can be noted that 2-seat vehicles are outlyers in the sense that they achieve better highway fuel efficiency than other types of vehicles with the same size engine. This is likely explained by the fact that 2-seat vehicles are smaller and lighter than the other vehicles which have similar sized engines.
+The above scatter plot of Engine Size vs. Highway Fuel Efficiency, which includes color coded dots according to the type of vehicle, suggests that 2-seat vehicles are outliers; the data for these vehicles exhibits better highway fuel efficiency than other types of vehicles with the same size engine. This is likely due to the fact that 2-seat vehicles are smaller and lighter than the other vehicles, which have similar sized engines.
 
 # **Exercise 2:**
 
@@ -128,7 +126,7 @@ MaritalStatusDefaultAnalysis$percentageDefaulted <- percentageDefaulted
 kable(MaritalStatusDefaultAnalysis[,])
 ```
 
-The above graph and table dmeonstrate how customer marital status is related to the rate at which they default on the loan or mortgage the customer holds with the bank. From the graph and table, we note that in general, a very small proportion (approximatley 1.7%) of all customers, across all marital stauses, default on the loans/mortgages they hold. However, the table demonstrates that customers who have been divorced are the most at-risk population for defaulting on their loan/mortgage, and married individuals are the population with the lowest risk of defaulting.
+The above figures indicate how customer marital status is related to the rate at which they default on their loans or mortgages. It is also worth noting that in general, a very small proportion (approximately 1.7%) of all customers, across all marital statuses, default on the loans/mortgages they hold. Furthermore, the table demonstrates that divorcees are the most at-risk population for defaulting on their loan/mortgage, while married couples are the population with the lowest risk of defaulting.
 
 ```{r, results='asis'}
 MortgagesAndLoans <- ggplot(
@@ -179,4 +177,4 @@ MortgageLoanAnalysis <- t(MortgageLoanAnalysis)
 kable(MortgageLoanAnalysis[,])
 ```
 
-The above graph and table display data on customers who have neither a loan nor a loan, only a mortgage, only a loan, or both. From the graph, it can be seen that the largest population has only a mortgage, but the smallest population has both a loan and a mortgage. The table breaks these populations down into percentages, and it can be seen that roughly half of all customers hold mortgages, but the next largest population is customers who have neither a mortgage nor a loan. Thus, from a business perspective, one of the best approaches to increasing revenues for the bank would be to entice the large population of customers (approximately 37%) who do not have a mortgage or a loan to take out a mortgage or loan from the bank. Another tactic which could possibly increase business revenues would be to target the population of customers who have exclusively a loan or a mortgage, and attempt to entice them to take out another or one of the other types.
+These figures display data on customers who have neither a loan nor a mortgage, only a mortgage, only a loan, or both. The graph illustrates that the largest population has only a mortgage, but the smallest population has both a loan and a mortgage. The table breaks these populations down into percentages, and it is clear that roughly half of all customers hold mortgages, while the next largest population is customers who have neither a mortgage nor a loan. Thus, from a business perspective, one of the best approaches to increasing revenues for the bank would be to entice the large population of customers (approximately 37%) who do not have a mortgage or a loan to take out a mortgage or loan. Another possible strategy to increase revenue would be to target the population of customers who only have a loan or a mortgage, and propose that they either take out another or take out a new type.
