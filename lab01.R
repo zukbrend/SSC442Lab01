@@ -72,20 +72,23 @@ bankData <- read.csv("bank.csv")
 numDivorced <- length(which(bankData$marital == "divorced"))
 numMarried <- length(which(bankData$marital == "married"))
 numSingle <- length(which(bankData$marital == "single"))
+numTotal <- numDivorced + numMarried + numSingle
 
 numDivorcedDefault <- length(bankData[bankData$marital=="divorced" & bankData$default=="yes", ]$default)
 numMarriedDefault <- length(bankData[bankData$marital=="married" & bankData$default=="yes", ]$default)
 numSingleDefault <- length(bankData[bankData$marital=="single" & bankData$default=="yes", ]$default)
+numTotalDefault <- numDivorcedDefault + numMarriedDefault + numSingleDefault
 
-totalNumCustomers <- c(numDivorced, numMarried, numSingle)
-totalNumCustomersDefaulted <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault)
+totalNumCustomers <- c(numDivorced, numMarried, numSingle, numTotal)
+totalNumCustomersDefaulted <- c(numDivorcedDefault, numMarriedDefault, numSingleDefault, numTotalDefault)
 percentageDefaulted <- c(
   ((numDivorcedDefault  /numDivorced) * 100), 
   ((numMarriedDefault / numMarried) * 100), 
-  ((numSingleDefault / numSingle) * 100)
+  ((numSingleDefault / numSingle) * 100),
+  ((numTotalDefault / numTotal) * 100)
 )
 
-MaritalStatusDefaultAnalysis <- as.data.frame(totalNumCustomers, c("Divorced", "Married", "Single"))
+MaritalStatusDefaultAnalysis <- as.data.frame(totalNumCustomers, c("Divorced", "Married", "Single", "Total"))
 MaritalStatusDefaultAnalysis$totalNumCustomersDefaulted <- totalNumCustomersDefaulted
 MaritalStatusDefaultAnalysis$percentageDefaulted <- percentageDefaulted
 
