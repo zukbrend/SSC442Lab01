@@ -3,7 +3,7 @@ library(tidyverse)
 bank <- read.csv("bank.csv", stringsAsFactors=FALSE)
 
 fullBalanceModel <- lm(
-  balance ~ .,
+  balance ~ age + job + marital + education + default + housing + loan + contact + day + month + duration + campaign + previous,
   data=bank
 )
 summary(fullBalanceModel)
@@ -15,7 +15,7 @@ intuitiveBalanceModel <- lm(
 summary(intuitiveBalanceModel)
 
 anova(intuitiveBalanceModel, fullBalanceModel)
-# This ANOVA test yields an F value of 5.9, thus there are more factors that meaningfully 
+# This ANOVA test yields an F value of 6.1, thus there are more factors that meaningfully 
 # contribute to predicting balance
 
 intuitiveBalanceModel2 <- lm(
@@ -25,7 +25,7 @@ intuitiveBalanceModel2 <- lm(
 summary(intuitiveBalanceModel2)
 
 anova(intuitiveBalanceModel2, fullBalanceModel)
-# This ANOVA test yields an F value of 7.4, thus we got farther from accurately 
+# This ANOVA test yields an F value of 7.8, thus we got farther from accurately 
 # predicting balance by adding job and education, so at least one of these factors 
 # is irrelevant in predicting balance
 
@@ -38,5 +38,5 @@ intuitiveBalanceModel3 <- lm(
 summary(intuitiveBalanceModel3)
 
 anova(intuitiveBalanceModel3, fullBalanceModel)
-# This ANOVA test yields an F value of 1.1, thus we find that this model a good 
+# This ANOVA test yields an F value of 1.2, thus we find that this model is a good 
 # predictor of balance after removing meaningless variables
