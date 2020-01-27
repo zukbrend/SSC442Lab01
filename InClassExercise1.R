@@ -40,3 +40,13 @@ summary(intuitiveBalanceModel3)
 anova(intuitiveBalanceModel3, fullBalanceModel)
 # This ANOVA test yields an F value of 1.2, thus we find that this model is a good 
 # predictor of balance after removing meaningless variables
+
+goodPredictor <- intuitiveBalanceModel3
+
+# The resulting final model demonstrates that the age of the customer, whether the 
+# customer has any credit in default, the marital status of the customer, what job 
+# the customer holds, whether the customer holds a loan or not, and what month the 
+# customer joined the bank in, all hold meaningful correlations when attempting to 
+# predict the balance a customer has in an account with the bank. Which further leads
+# to a model which can also be useful in predicting any of the aforementioned variables, 
+# as correlations work in both directions. 
