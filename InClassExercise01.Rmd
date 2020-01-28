@@ -41,11 +41,11 @@ With the null hypothesis being intuitiveBalanceModel
 anova(intuitiveBalanceModel, fullBalanceModel)
 ```
 
-yields an F value of 6.1, thus there are more factors that meaningfully contribute to predicting balance in the fullBalanceModel that are not represented in intuitiveBalanceModel.
+yields an F value of 6.1 and a p value of 2.2e-16, thus all of the intuitive variables we picked well predict balance.
 
 # Updating our intuitive model
 
-Using some more intuitive thinking, we update the intuitiveBalanceModel to attempt to better predict balance:
+Using some more intuitive thinking, we update the intuitiveBalanceModel to attempt to even better predict balance:
 
 ```{r updatedIntuitiveBalanceModel}
 updatedIntuitiveBalanceModel <- lm(
@@ -59,15 +59,16 @@ With the null hypothesis being updatedIntuitiveBalanceModel
 ```{r anovaUpdated, results='hide'}
 anova(updatedIntuitiveBalanceModel, fullBalanceModel)
 ```
-yields an F value of 7.8, thus we got farther from accurately predicting balance by adding job and education, so at least one of these factors is irrelevant in predicting balance
+
+yields an F value of 7.8, which tells us that this model better predicts balance than the first intuitive model we created. This ANOVA test also yields a p value of 2.2e-16, which denotes that the additional variables of job and education that were added to this model both help better predict balance.
 
 # Statistically relevant variables
 
-Now that intuition is failing us, we can attempt to see what variables could be meaningful in predicting balance by looking at the t value column of the summary of the fullBalanceModel, and choose all categories with a t value > 2:
+Now, we can attempt to see what variables could be meaningful in predicting balance by looking at the p value column of the summary of the fullBalanceModel, and choose all categories with a p value < 0.01:
 
 ```{r statisticallyImportantModel}
 statisticallyImportantModel <- lm(
-  balance ~ age + default + marital + job + loan + month,
+  balance ~ age + default + marital + loan,
   data=bank
 )
 ```
@@ -78,8 +79,8 @@ With the null hypothesis being staisticallyImportantModel
 anova(statisticallyImportantModel, fullBalanceModel)
 ```
 
-yields an F value of 1.2, thus we find that this model a good predictor of balance after removing meaningless variables
+yields an F value of 5.7 and a p value of 2.2e-16, thus we find that this model is once again, a good predictor, but not as good of a predictor.
 
 # **Discussion**
 
-The resulting final model demonstrates that the age of the customer, whether the customer has any credit in default, the marital status of the customer, what job the customer holds, whether the customer holds a loan or not, and what month the customer joined the bank in, all hold meaningful correlations when attempting to predict the balance a customer has in an account with the bank. Which further leadsto a model which can also be useful in predicting any of the aforementioned variables, as correlations work in both directions.
+The results demonstrate that the age of the customer, whether the customer has any credit in default, the marital status of the customer, what job the customer holds, and the education level of the customer, all hold meaningful correlations when attempting to predict the balance a customer has in an account with the bank. Which further leads to a model which can also be useful in predicting any of the aforementioned variables, as correlations work in both directions.
