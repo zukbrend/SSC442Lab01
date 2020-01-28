@@ -19,7 +19,8 @@ bank <- read.csv("bank.csv", stringsAsFactors=FALSE)
 
 ```{r  fullBalanceModel}
 fullBalanceModel <- lm(
-  balance ~ age + job + marital + education + default + housing + loan + contact + day + month + duration + campaign + previous,
+  balance ~ age + job + marital + education + default + housing + loan + contact + 
+    day + month + duration + campaign + previous,
   data=bank
 )
 ```
